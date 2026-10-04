@@ -1,14 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>URED</title>
-</head>
-<body>
-    <h1><b>URED Register</b></h1>
-    <form method="POST" action="register.php">
-    <table>
+<?php include './layout/header.php'; ?>
+    <div class="auth-nav">
+        <a href="Register.php" class="btn btn-primary">Register</a>
+        <a href="Login.php" class="btn btn-ghost">Login</a>
+    </div>
+
+
+    <div class="auth-container">
+        <div class="auth-card">
+        <form method="POST" action="register.php">
+            <h1 class="auth-title">URED Register</h1>
+            <table>
         <tr>
             <td><input type="text" name="username" placeholder="Username"></td>
         </tr>
@@ -22,7 +23,8 @@
             </td>
         </tr>
     </table>
+    </div>
+</div>
 </form>
     
-</body>
-</html>
+<?php include './layout/foot.php'; ?>
