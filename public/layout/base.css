@@ -182,7 +182,7 @@ input[type="file"]::file-selector-button:hover {
   transform: translateY(-1px);
 }
 
-/* ---------- Icons, alerts and small helpers ---------- */
+
 img {
   max-width: 100%;
 }
@@ -192,9 +192,28 @@ img {
   color: var(--primary);
 }
 
-.nav-link i,
-.nav-logout i {
-  margin-right: 0.35rem;
+
+.nav-text {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0.5rem;
+  font-size: 1.3rem;
+}
+
+.nav-link i {
+  margin-right: 0;
 }
 
 .logout-form {

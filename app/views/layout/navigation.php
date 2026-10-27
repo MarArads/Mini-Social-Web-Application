@@ -9,10 +9,6 @@ $flash = pull_flash();
         <a href="Newsfeed.php" class="nav-link" title="Newsfeed"><i class="bi bi-house-door"></i><span class="nav-text">Newsfeed</span></a>
         <a href="post_form.php" class="nav-link" title="New Post"><i class="bi bi-plus-square"></i><span class="nav-text">New Post</span></a>
         <a href="Profile.php" class="nav-link" title="Profile"><i class="bi bi-person-circle"></i><span class="nav-text">Profile</span></a>
-        <form method="POST" action="Logout.php" class="logout-form">
-            <?= csrf_field() ?>
-            <button type="submit" class="btn btn-ghost nav-logout" title="Log out"><i class="bi bi-box-arrow-right"></i><span class="nav-text">Log out</span></button>
-        </form>
         <button class="toggle-theme" id="themeToggle" type="button" aria-label="Toggle dark mode">🌙</button>
     </div>
 </nav>

@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="assets/images/URED.png?v=1">
     <title>URED | Profile</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="layout/base.css">
@@ -28,11 +29,15 @@
                     <span><strong><?= (int) $postCount ?></strong> Posts</span>
                     <span>Joined <strong><?= htmlspecialchars($user['joined'] ?? 'Recently') ?></strong></span>
                 </div>
-                <?php if ((int) $user['id'] === (int) $currentUser['id']): ?>
-                    <div class="profile-actions">
-                        <a href="profile_edit.php" class="btn btn-ghost btn-small"><i class="bi bi-pencil-square"></i> Edit Profile</a>
-                    </div>
-                <?php endif; ?>
+            <?php if ((int) $user['id'] === (int) $currentUser['id']): ?>
+            <div class="profile-actions">
+                <a href="profile_edit.php" class="btn btn-ghost btn-small"><i class="bi bi-pencil-square"></i> Edit Profile</a>
+                <form method="POST" action="Logout.php" class="logout-form">
+                    <?= csrf_field() ?>
+                    <button type="submit" class="btn btn-ghost btn-small"><i class="bi bi-box-arrow-right"></i> Log out</button>
+               </form>
+            </div>
+            <?php endif; ?>
             </div>
         </section>
 

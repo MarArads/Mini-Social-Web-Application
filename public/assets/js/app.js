@@ -33,7 +33,7 @@
     }
   }
 
-  /
+  
   function checkImage(input) {
     clearError(input);
     if (!input.files || !input.files.length) return true;
@@ -58,8 +58,7 @@
     input.addEventListener('change', function () { checkImage(input); });
   });
 
-  // ---------- per-form rules ----------
-  // Each rule returns true when the form is fine, and shows messages when it is not.
+
   var rules = {
     login: function (form) {
       var ok = true;
@@ -156,7 +155,7 @@
     var rule = rules[form.getAttribute('data-validate')];
     if (!rule) return;
 
-    // Remove an error as soon as the person starts fixing the field.
+    
     form.addEventListener('input', function (event) {
       if (event.target && event.target.name) clearError(event.target);
     });

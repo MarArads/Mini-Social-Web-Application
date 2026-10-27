@@ -231,6 +231,9 @@
   .profile-header {
     flex-direction: column;
     text-align: center;
+  .profile-actions {
+    justify-content: center;
+  }
   }
 }
 
@@ -342,7 +345,7 @@
   font-size: 0.78rem;
 }
 
-/* ---------- Extra pieces used by the views ---------- */
+
 img.avatar,
 img.profile-avatar {
   object-fit: cover;
@@ -370,6 +373,9 @@ a.post-author:hover,
 }
 
 .profile-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
   margin-top: 0.8rem;
 }
 
@@ -428,7 +434,7 @@ a.post-author:hover,
   min-width: 0;
 }
 
-/* Hover lift only makes sense with a mouse */
+
 @media (hover: none) {
   .post-card:hover {
     transform: none;
@@ -436,7 +442,7 @@ a.post-author:hover,
   }
 }
 
-/* ---------- Phone layout: pages ---------- */
+
 @media (max-width: 640px) {
   .page {
     padding: 1rem 0.75rem 3rem;
@@ -483,7 +489,7 @@ a.post-author:hover,
     min-height: 40px;
   }
 
-  /* 16px text stops iPhones from zooming in when a field is tapped */
+  
   .post-form textarea,
   .comment-form input[type="text"],
   .search-bar input,
@@ -560,7 +566,7 @@ a.post-author:hover,
   }
 }
 
-/* Red outline on a field that failed validation */
+
 .post-form .input-invalid,
 .comment-form .input-invalid,
 .form-input.input-invalid {
