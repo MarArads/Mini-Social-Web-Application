@@ -1,6 +1,10 @@
 <?php
 
+ob_start();
+
 require_once __DIR__ . '/../app/helpers/Security.php';
+require_once __DIR__ . '/../app/helpers/Errors.php';
+register_error_handlers();
 
 
 start_secure_session();
@@ -22,11 +26,13 @@ require_once __DIR__ . '/../app/controllers/AuthController.php';
 require_once __DIR__ . '/../app/controllers/PostController.php';
 require_once __DIR__ . '/../app/controllers/CommentController.php';
 require_once __DIR__ . '/../app/controllers/ProfileController.php';
+require_once __DIR__ . '/../app/controllers/ReportController.php';
 
 $authController = new AuthController();
 $postController = new PostController();
 $commentController = new CommentController();
 $profileController = new ProfileController();
+$reportController = new ReportController();
 
 $route = $_GET['action'] ?? $_GET['page'] ?? $_GET['route'] ?? '';
 if (empty($route)) {
@@ -103,8 +109,20 @@ switch ($route) {
         $profileController->edit();
         break;
 
+    case 'reports':
+        $reportController->index();
+        break;
+
+    case 'report_export':
+    case 'report-export':
+        $reportController->export();
+        break;
+
+    case '':
     case 'newsfeed':
-    default:
         $postController->newsfeed();
         break;
+
+    default:
+        show_error_page(404, 'Page not found', 'The page you are looking for does not exist.');
 }

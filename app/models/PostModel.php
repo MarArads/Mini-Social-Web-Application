@@ -18,31 +18,27 @@ class PostModel {
     public function getById($id, $currentUserId = null) {
         $sql = "SELECT p.id, p.user_id, p.content, p.image, p.created_at, u.username, u.full_name, u.profile_image,
             (SELECT COUNT(*) FROM likes l WHERE l.post_id = p.id) AS likes,
-            " . ($currentUserId !== null ? "(SELECT COUNT(*) FROM likes l WHERE l.post_id = p.id AND l.user_id = ?) AS liked" : "0 AS liked") . "
+            (SELECT COUNT(*) FROM likes l WHERE l.post_id = p.id AND l.user_id = ?) AS liked
             FROM posts p
             JOIN users u ON p.user_id = u.id
             WHERE p.id = ?";
         $stmt = $this->db->prepare($sql);
-        if ($currentUserId !== null) {
-            $stmt->execute([$currentUserId, $id]);
-        } else {
-            $stmt->execute([$id]);
-        }
+        $stmt->execute([(int) $currentUserId, $id]);
         return $stmt->fetch();
     }
 
     public function getAll($search = '', $currentUserId = null) {
         $sql = "SELECT p.id, p.user_id, p.content, p.image, p.created_at, u.username, u.full_name, u.profile_image,
             (SELECT COUNT(*) FROM likes l WHERE l.post_id = p.id) AS likes,
-            " . ($currentUserId !== null ? "(SELECT COUNT(*) FROM likes l WHERE l.post_id = p.id AND l.user_id = " . (int)$currentUserId . ") AS liked" : "0 AS liked") . "
+            (SELECT COUNT(*) FROM likes l WHERE l.post_id = p.id AND l.user_id = ?) AS liked
             FROM posts p
             JOIN users u ON p.user_id = u.id";
-        
-        $params = [];
+
+        $params = [(int) $currentUserId];
         if (!empty($search)) {
             $sql .= " WHERE p.content LIKE ? OR u.username LIKE ? OR u.full_name LIKE ?";
             $term = '%' . $search . '%';
-            $params = [$term, $term, $term];
+            array_push($params, $term, $term, $term);
         }
 
         $sql .= " ORDER BY p.created_at DESC";
@@ -55,13 +51,13 @@ class PostModel {
     public function getByUserId($userId, $currentUserId = null) {
         $sql = "SELECT p.id, p.user_id, p.content, p.image, p.created_at, u.username, u.full_name, u.profile_image,
             (SELECT COUNT(*) FROM likes l WHERE l.post_id = p.id) AS likes,
-            " . ($currentUserId !== null ? "(SELECT COUNT(*) FROM likes l WHERE l.post_id = p.id AND l.user_id = " . (int)$currentUserId . ") AS liked" : "0 AS liked") . "
+            (SELECT COUNT(*) FROM likes l WHERE l.post_id = p.id AND l.user_id = ?) AS liked
             FROM posts p
             JOIN users u ON p.user_id = u.id
             WHERE p.user_id = ?
             ORDER BY p.created_at DESC";
         $stmt = $this->db->prepare($sql);
-        $stmt->execute([$userId]);
+        $stmt->execute([(int) $currentUserId, $userId]);
         return $stmt->fetchAll();
     }
 

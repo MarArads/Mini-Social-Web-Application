@@ -3,13 +3,16 @@
 require_once __DIR__ . '/../helpers/Security.php';
 require_once __DIR__ . '/../helpers/ImageUpload.php';
 require_once __DIR__ . '/../models/UserModel.php';
+require_once __DIR__ . '/../models/LoginAttemptModel.php';
 
 class AuthController {
     private $userModel;
+    private $attemptModel;
 
     public function __construct() {
         start_secure_session();
         $this->userModel = new UserModel();
+        $this->attemptModel = new LoginAttemptModel();
     }
 
     public function isLoggedIn() {
@@ -55,13 +58,23 @@ class AuthController {
             if (empty($username) || empty($password)) {
                 $error = 'Please enter both username and password.';
             } else {
-                $user = $this->userModel->findByUsername($username);
-                if ($user && password_verify($password, $user['password'])) {
-                    $this->startUserSession($user['id'], $user['username']);
-                    header('Location: Newsfeed.php');
-                    exit;
+                $waitSeconds = $this->attemptModel->secondsLocked($username);
+
+                if ($waitSeconds > 0) {
+                    
+                    $minutes = (int) ceil($waitSeconds / 60);
+                    $error = 'Too many failed attempts. Please try again in ' . $minutes . ' minute' . ($minutes === 1 ? '' : 's') . '.';
                 } else {
-                    $error = 'Invalid username or password.';
+                    $user = $this->userModel->findByUsername($username);
+                    if ($user && password_verify($password, $user['password'])) {
+                        $this->attemptModel->clear($username);
+                        $this->startUserSession($user['id'], $user['username']);
+                        header('Location: Newsfeed.php');
+                        exit;
+                    } else {
+                        $this->attemptModel->recordFailure($username);
+                        $error = 'Invalid username or password.';
+                    }
                 }
             }
         }
