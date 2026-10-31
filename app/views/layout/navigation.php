@@ -9,7 +9,9 @@ $flash = pull_flash();
         <a href="Newsfeed.php" class="nav-link" title="Newsfeed"><i class="bi bi-house-door"></i><span class="nav-text">Newsfeed</span></a>
         <a href="post_form.php" class="nav-link" title="New Post"><i class="bi bi-plus-square"></i><span class="nav-text">New Post</span></a>
         <a href="Profile.php" class="nav-link" title="Profile"><i class="bi bi-person-circle"></i><span class="nav-text">Profile</span></a>
-        <a href="reports.php" class="nav-link" title="Reports"><i class="bi bi-bar-chart-line"></i><span class="nav-text">Reports</span></a>
+        <?php if (!empty($_SESSION['is_admin'])): ?>
+    <a href="reports.php" class="nav-link" title="Reports"><i class="bi bi-bar-chart-line"></i><span class="nav-text">Reports</span></a>
+<?php endif; ?>
         <button class="toggle-theme" id="themeToggle" type="button" aria-label="Toggle dark mode">🌙</button>
     </div>
 </nav>

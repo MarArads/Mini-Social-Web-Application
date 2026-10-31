@@ -14,6 +14,7 @@
         <h1 class="page-title">Edit Comment</h1>
 
         <form class="post-form" method="POST" action="comment_edit.php">
+            <?= csrf_field() ?>
             <input type="hidden" name="id" value="<?= (int) $comment['id'] ?>">
             <textarea name="content" maxlength="300" required><?= htmlspecialchars($comment['content']) ?></textarea>
 

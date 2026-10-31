@@ -17,7 +17,12 @@ class ReportController {
         $this->authController = new AuthController();
     }
 
-    
+    private function requireAdmin() {
+        $this->authController->requireAuth();
+        if (!$this->userModel->isAdmin($this->authController->getCurrentUserId())) {
+            show_error_page(403, 'Access denied', 'Only the administrator can view the reports.');
+        }
+    }
     private function readFilters(&$problem) {
         $problem = '';
 
@@ -58,7 +63,7 @@ class ReportController {
     }
 
     public function index() {
-        $this->authController->requireAuth();
+        $this->requireAdmin();
         $currentUser = $this->userModel->findById($this->authController->getCurrentUserId());
 
         $filters = $this->readFilters($filterProblem);
@@ -89,7 +94,7 @@ class ReportController {
 
     
     public function export() {
-        $this->authController->requireAuth();
+        $this->requireAdmin();
 
         $filters = $this->readFilters($ignored);
         $sort = $this->readSort();

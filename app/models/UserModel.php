@@ -21,6 +21,18 @@ class UserModel {
         return $stmt->fetch();
     }
 
+    public function isAdmin($id) {
+        try {
+            $stmt = $this->db->prepare("SELECT role FROM users WHERE id = ?");
+            $stmt->execute([$id]);
+            $row = $stmt->fetch();
+            return $row && $row['role'] === 'admin';
+        } catch (PDOException $e) {
+            error_log('UserModel::isAdmin failed: ' . $e->getMessage());
+            return false;
+        }
+    }
+
     public function existsUsername($username, $excludeId = null) {
         if ($excludeId !== null) {
             $stmt = $this->db->prepare("SELECT COUNT(*) FROM users WHERE username = ? AND id != ?");
@@ -54,4 +66,6 @@ class UserModel {
         $stmt->execute([$term, $term]);
         return $stmt->fetchAll();
     }
+
+    
 }

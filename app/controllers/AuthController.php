@@ -36,6 +36,7 @@ class AuthController {
         unset($_SESSION['csrf_token']);
         $_SESSION['user_id'] = (int) $userId;
         $_SESSION['username'] = $username;
+        $_SESSION['is_admin'] = $this->userModel->isAdmin($userId);
     }
 
     public function login() {
