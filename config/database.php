@@ -6,12 +6,12 @@ class Database {
     public static function connect() {
         if (self::$instance === null) {
             $host = 'localhost';
-            $dbname = 'social_app';
+            $dbname = 'socialapp';
             $username = 'root';
             $password = '';
             $charset = 'utf8mb4';
 
-            $dsn = "mysql:host=$host;dbname=$dbname;charset=$charset";
+            $dsn = "mysqli:host=$host;dbname=$dbname;charset=$charset";
             $options = [
                 PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
                 PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
